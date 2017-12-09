@@ -8,6 +8,7 @@ html,
 body {
   font-size: 16px;
   font-family: PingFangSC;
+  width: 100%;
 }
 
 body {
@@ -15,8 +16,9 @@ body {
 }
 
 .main-container {
-  max-width: 960px;
+  /* max-width: 960px; */
   margin: 0 auto;
+  width: 100%;
 }
 
 header {
@@ -83,4 +85,11 @@ header {
 .bold {
   font-size: 24px;
   font-weight: bold;
+}
+.section-title {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+  margin: 0 3%;
+  /* border-bottom: 1px solid #ececec; */
 }
