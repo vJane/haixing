@@ -23,7 +23,9 @@
 
   <script>
     $(function () {
-      $('#fullpage').fullpage({});
+      $('#fullpage').fullpage({
+        anchors: ['firstPage', 'secondPage', 'thirdPage', 'fourthPage', 'fifthPage', 'sixthPage', 'seventhPage', 'lastPage'],
+      });
     });
   </script>
 </head>
@@ -44,7 +46,7 @@
         </div>
     </header>
     <div id="fullpage">
-      <div class="section" id="firstPage">
+      <div class="section">
         <h3 class="section-title">What percent of Harvard faculty do you think are listed as female?</h3>
         <div class="w3-row-padding row">
           <div id="interactive-introduction">
@@ -77,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="section" id="secondPage">
+      <div class="section">
         <h3 class="section-title">Let's take a closer look by concentration:</h3>
         <div>In only
           <strong>6</strong> concentrations are there more female than male faculty.</div>
@@ -111,7 +113,7 @@
 
         </div>
       </div>
-      <div class="section" id="thirdPage">
+      <div class="section">
         <!--wage gap-->
         <div class="w3-container" id="wage_gap">
           <h3 class="section-title">However, inequity continues even after women are hired...</h3>
@@ -124,7 +126,7 @@
         </div>
       </div>
 
-      <div class="section" id="fourthPage">
+      <div class="section">
         <!--other schools-->
         <div class="w3-container" id="other_schools">
           <h3 class="section-title">But this is not just a problem at Harvard.</h3>
@@ -145,7 +147,7 @@
         </div>
       </div>
 
-      <div class="section" id="fifthPage">
+      <div class="section">
         <!--nationwide-->
         <div class="w3-container" id="nationwide">
           <h3 class="section-title">In fact, this is a nation-wide phenomenon.</h3>
@@ -172,7 +174,7 @@
       </div>
 
 
-      <div class="section" id="sixthPage">
+      <div class="section">
         <!--timeline-->
         <div class="w3-container" id="timeline_section">
           <h3 class="section-title">However, these problems are nothing new.</h3>
@@ -218,7 +220,7 @@
           <p class="bottom-title">Hover over an event for a brief description; Click for more information.</p>
         </div>
       </div>
-      <div class="section" id="seventhPage">
+      <div class="section">
         <!--responses-->
         <div class="w3-container" id="responses">
           <h3 class="section-title">So how do people at Harvard feel about all this?
@@ -387,7 +389,7 @@
             width="1000" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
         </div>
       </div>
-      <div class="section last-section" id="lastPage">
+      <div class="section last-section">
         <!--about-->
         <div class="w3-container" id="about">
           <h3 class="section-title">About this Project</h3>
