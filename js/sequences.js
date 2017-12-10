@@ -17,7 +17,7 @@ var colors = {
     "Arts & Humanities": "#d5c3b5",
     "Social Sciences": "#5a6f5e",
     "Materials Science & Mech Eng": "#e7ebec",
-    "Computer Science":"e7ebec",
+    "Computer Science": "e7ebec",
     "Applied Math": "e7ebec",
     "Electrical Eng": "e7ebec",
     "Biomedical Engineering": "e7ebec",
@@ -53,14 +53,14 @@ var partition = d3.partition()
     .size([2 * Math.PI, radius * radius]);
 
 var arc = d3.arc()
-    .startAngle(function(d) { return d.x0; })
-    .endAngle(function(d) { return d.x1; })
-    .innerRadius(function(d) { return Math.sqrt(d.y0); })
-    .outerRadius(function(d) { return Math.sqrt(d.y1); });
+    .startAngle(function (d) { return d.x0; })
+    .endAngle(function (d) { return d.x1; })
+    .innerRadius(function (d) { return Math.sqrt(d.y0); })
+    .outerRadius(function (d) { return Math.sqrt(d.y1); });
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-d3.text("data/facultygenderjson.csv", function(text) {
+d3.text("data/facultygenderjson.csv", function (text) {
     var csv = d3.csvParseRows(text);
     var json = buildHierarchy(csv);
     createVisualization(json);
@@ -82,41 +82,41 @@ function createVisualization(json) {
 
     // Turn the data into a d3 hierarchy and calculate the sums.
     var root2 = d3.hierarchy(json)
-        .sum(function(d) { return d.femalesize; })
+        .sum(function (d) { return d.femalesize; })
     //.sort(function(a, b) { return b.value - a.value; });
 
     var root = d3.hierarchy(json)
-        .sum(function(d) { return d.size; })
+        .sum(function (d) { return d.size; })
     //.sort(function(a, b) { return b.value - a.value; });
 
     // For efficiency, filter nodes to keep only those large enough to see.
     var nodes = partition(root).descendants()
-        .filter(function(d) {
+        .filter(function (d) {
             return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
         });
 
     var nodes2 = partition(root2).descendants()
-        .filter(function(d) {
+        .filter(function (d) {
             return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
         });
 
     total = 0;
 
-    for (i = 0; i < nodes.length; i++){
-        for (j = 0; j < nodes2.length; j++){
-            if (nodes[i].data.name == nodes2[j].data.name){
+    for (i = 0; i < nodes.length; i++) {
+        for (j = 0; j < nodes2.length; j++) {
+            if (nodes[i].data.name == nodes2[j].data.name) {
                 total = total + 1;
                 break;
             }
         }
     }
 
-    for (i = 0; i < nodes2.length; i++){
-        for (j = 0; j < nodes.length; j++){
-            if (nodes2[i].data.name == nodes[j].data.name){
+    for (i = 0; i < nodes2.length; i++) {
+        for (j = 0; j < nodes.length; j++) {
+            if (nodes2[i].data.name == nodes[j].data.name) {
                 nodes[j].value2 = nodes2[i].value;
 
-                if (nodes[j].data.name == "root"){
+                if (nodes[j].data.name == "root") {
                     totalFemaleValue = nodes[j].value2;
                     totalValue = nodes[j].value;
                 }
@@ -140,13 +140,13 @@ function createVisualization(json) {
     var path = vis.data([json]).selectAll("path")
         .data(nodes)
         .enter().append("svg:path")
-        .attr("display", function(d) { return d.depth ? null : "none"; })
+        .attr("display", function (d) { return d.depth ? null : "none"; })
         .attr("d", arc)
         .attr("fill-rule", "evenodd")
-        .style("fill", function(d) { return colors[d.data.name]; })
+        .style("fill", function (d) { return colors[d.data.name]; })
         .style("opacity", 1)
         .on("mouseover", mouseover)
-        .on("click",mouseover);
+        .on("click", mouseover);
 
     // Add the mouseleave handler to the bounding circle.
     d3.select("#container").on("mouseleave", mouseleave);
@@ -157,14 +157,14 @@ function createVisualization(json) {
 function mouseover(d) {
     var department = d.data["name"]
     if (department != "SEAS" &
-        department !="Science" &
+        department != "Science" &
         department != "Arts & Humanities",
-        department != "Social Sciences"){
+        department != "Social Sciences") {
         $('#current_concentration').attr('value', department);
         var myInput = d3.select("#current_concentration");
         myInput.on("change")();
     }
-    if (!d.value2){
+    if (!d.value2) {
         d.value2 = 0;
     }
     var percentage = (100 * d.value2 / d.value).toPrecision(3);
@@ -188,7 +188,7 @@ function mouseover(d) {
 
     // Then highlight only those that are an ancestor of the current segment.
     vis.selectAll("path")
-        .filter(function(node) {
+        .filter(function (node) {
             return (sequenceArray.indexOf(node) >= 0);
         })
         .style("opacity", 1);
@@ -203,36 +203,36 @@ function mouseover(d) {
 
 // // Restore everything to full opacity when moving off the visualization.
 function mouseleave(d) {
-//   var percentage = (totalFemaleValue / totalValue * 100).toPrecision(3);
-//   var percentageString = percentage + "%";
-//   if (percentage < 0.1) {
-//     percentageString = "< 0.1%";
-//   }
-//
-//   d3.select("#percentage")
-//       .text(percentageString);
-//
-//   d3.select("#explanation")
-//       .style("visibility", "");
-//
-//   // Hide the breadcrumb trail
-//   d3.select("#trail")
-//       .style("visibility", "hidden");
-//
-//   // Deactivate all segments during transition.
-//   d3.selectAll("path").on("mouseover", null);
-//
+    //   var percentage = (totalFemaleValue / totalValue * 100).toPrecision(3);
+    //   var percentageString = percentage + "%";
+    //   if (percentage < 0.1) {
+    //     percentageString = "< 0.1%";
+    //   }
+    //
+    //   d3.select("#percentage")
+    //       .text(percentageString);
+    //
+    //   d3.select("#explanation")
+    //       .style("visibility", "");
+    //
+    //   // Hide the breadcrumb trail
+    //   d3.select("#trail")
+    //       .style("visibility", "hidden");
+    //
+    //   // Deactivate all segments during transition.
+    //   d3.selectAll("path").on("mouseover", null);
+    //
     // Transition each segment to full opacity and then reactivate it.
     d3.selectAll("path")
         .transition()
         .duration(1000)
         .style("opacity", 1)
-        .on("end", function() {
+        .on("end", function () {
             d3.select(this).on("mouseover", mouseover);
         });
-//
-//   d3.select("#explanation")
-//       .style("visibility", "");
+    //
+    //   d3.select("#explanation")
+    //       .style("visibility", "");
 }
 
 function initializeBreadcrumbTrail() {
@@ -267,7 +267,7 @@ function updateBreadcrumbs(nodeArray, percentageString) {
     // Data join; key function combines name and depth (= position in sequence).
     var trail = d3.select("#trail")
         .selectAll("g")
-        .data(nodeArray, function(d) { return d.data.name + d.depth; });
+        .data(nodeArray, function (d) { return d.data.name + d.depth; });
 
     // Remove exiting nodes.
     trail.exit().remove();
@@ -277,17 +277,17 @@ function updateBreadcrumbs(nodeArray, percentageString) {
 
     entering.append("svg:polygon")
         .attr("points", breadcrumbPoints)
-        .style("fill", function(d) { return colors[d.data.name]; });
+        .style("fill", function (d) { return colors[d.data.name]; });
 
     entering.append("svg:text")
         .attr("x", (b.w + b.t) / 2)
         .attr("y", b.h / 2)
         .attr("dy", "0.35em")
         .attr("text-anchor", "middle")
-        .text(function(d) { return d.data.name; });
+        .text(function (d) { return d.data.name; });
 
     // Merge enter and update selections; set position for all nodes.
-    entering.merge(trail).attr("transform", function(d, i) {
+    entering.merge(trail).attr("transform", function (d, i) {
         return "translate(" + i * (b.w + b.s) + ", 0)";
     });
 
@@ -319,7 +319,7 @@ function drawLegend() {
     var g = legend.selectAll("g")
         .data(d3.entries(colors))
         .enter().append("svg:g")
-        .attr("transform", function(d, i) {
+        .attr("transform", function (d, i) {
             return "translate(0," + i * (li.h + li.s) + ")";
         });
 
@@ -328,14 +328,14 @@ function drawLegend() {
         .attr("ry", li.r)
         .attr("width", li.w)
         .attr("height", li.h)
-        .style("fill", function(d) { return d.value; });
+        .style("fill", function (d) { return d.value; });
 
     g.append("svg:text")
         .attr("x", li.w / 2)
         .attr("y", li.h / 2)
         .attr("dy", "0.35em")
         .attr("text-anchor", "middle")
-        .text(function(d) { return d.key; });
+        .text(function (d) { return d.key; });
 }
 
 function toggleLegend() {
@@ -352,7 +352,7 @@ function toggleLegend() {
 // root to leaf, separated by hyphens. The second column is a count of how
 // often that sequence occurred.
 function buildHierarchy(csv) {
-    var root = {"name": "root", "children": []};
+    var root = { "name": "root", "children": [] };
     for (var i = 0; i < csv.length; i++) {
         var sequence = csv[i][0];
         var femalesize = +csv[i][1];
@@ -378,13 +378,13 @@ function buildHierarchy(csv) {
                 }
                 // If we don't already have a child node for this branch, create it.
                 if (!foundChild) {
-                    childNode = {"name": nodeName, "children": []};
+                    childNode = { "name": nodeName, "children": [] };
                     children.push(childNode);
                 }
                 currentNode = childNode;
             } else {
                 // Reached the end of the sequence; create a leaf node.
-                childNode = {"name": nodeName, "size": size, "femalesize": femalesize};
+                childNode = { "name": nodeName, "size": size, "femalesize": femalesize };
                 children.push(childNode);
             }
         }
